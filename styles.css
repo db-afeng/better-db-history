@@ -1,0 +1,217 @@
+/**
+ * Better Databricks History - Styles
+ */
+
+#better-db-history-panel {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  width: 320px;
+  background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%);
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  z-index: 10000;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  color: #e6edf3;
+  overflow: hidden;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#better-db-history-panel.bdbh-hidden {
+  transform: translateX(400px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Header */
+.bdbh-header {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: #fff;
+  font-weight: 600;
+}
+
+.bdbh-logo {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.bdbh-title {
+  flex: 1;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.bdbh-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.bdbh-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Content */
+.bdbh-content {
+  padding: 16px;
+}
+
+/* Table Info */
+.bdbh-table-info {
+  background: rgba(255, 107, 53, 0.1);
+  border: 1px solid rgba(255, 107, 53, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.bdbh-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8b949e;
+  margin-bottom: 4px;
+}
+
+.bdbh-value {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+  color: #ff9f6b;
+  word-break: break-all;
+}
+
+/* Actions */
+.bdbh-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.bdbh-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  color: #e6edf3;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.bdbh-btn:hover {
+  background: #30363d;
+  border-color: #484f58;
+}
+
+.bdbh-btn-primary {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  border-color: transparent;
+  color: #fff;
+}
+
+.bdbh-btn-primary:hover {
+  background: linear-gradient(135deg, #ff7d4d 0%, #ffa033 100%);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+/* Output */
+.bdbh-output {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  padding: 14px;
+  min-height: 100px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.bdbh-output::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bdbh-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bdbh-output::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 3px;
+}
+
+.bdbh-hint {
+  color: #8b949e;
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+}
+
+.bdbh-loading {
+  color: #58a6ff;
+  text-align: center;
+  animation: bdbh-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes bdbh-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.bdbh-result h4 {
+  margin: 0 0 12px 0;
+  color: #ff9f6b;
+  font-size: 14px;
+}
+
+.bdbh-result ul {
+  margin: 0;
+  padding: 0 0 0 18px;
+  list-style-type: none;
+}
+
+.bdbh-result li {
+  position: relative;
+  margin-bottom: 6px;
+  color: #c9d1d9;
+}
+
+.bdbh-result li::before {
+  content: '›';
+  position: absolute;
+  left: -14px;
+  color: #ff6b35;
+}
+
+.bdbh-result p {
+  margin: 8px 0 0 0;
+}
+
+.bdbh-note {
+  background: rgba(88, 166, 255, 0.1);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #58a6ff;
+  font-size: 12px;
+  margin-top: 12px !important;
+}
