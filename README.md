@@ -12,7 +12,6 @@ When you navigate to a UC table's **History** tab, this extension:
    - `minFileSize`, `maxFileSize`, `p50FileSize`
    - And any other metrics present in your table's history
 3. **Toggle between views** - Switch back to the original table anytime with the Table button
-4. **Replaces email addresses with names** - Customize the `EMAIL_TO_NAME` mapping in `content.js`
 
 ## Screenshot
 
@@ -31,17 +30,33 @@ Into an interactive line chart with time on the X-axis and your selected metric 
 - Renders an interactive Chart.js visualization
 - Hover over points to see version, operation type, and exact values
 
-## Customization
+## Project Structure
 
-### Email Replacement
-
-Edit the mapping in `content.js`:
-
-```javascript
-const EMAIL_TO_NAME = {
-  'alex.feng@databricks.com': 'Alex Feng',
-  'jane.doe@databricks.com': 'Jane Doe',
-};
+```
+better-db-history/
+├── src/
+│   ├── injection/              # DOM substitution logic
+│   │   └── table-replacer.js   # Finds and replaces the history table
+│   │
+│   └── components/             # UI components and services
+│       ├── chart/              # Chart visualization
+│       │   ├── parser.js       # Parse table data
+│       │   └── renderer.js     # Render Chart.js visualization
+│       │
+│       ├── backend/            # Databricks app API (planned)
+│       │   └── databricks-api.js
+│       │
+│       └── interceptor/        # API interception (planned)
+│           └── network.js
+│
+├── lib/                        # External libraries
+│   ├── chart.min.js
+│   └── chartjs-adapter-date-fns.min.js
+│
+├── icons/
+├── styles.css
+├── content.js                  # Entry point
+└── manifest.json
 ```
 
 ## Installation

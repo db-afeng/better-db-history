@@ -13,7 +13,14 @@
   "content_scripts": [
     {
       "matches": ["https://*.cloud.databricks.com/explore/data/*"],
-      "js": ["chart.min.js", "chartjs-adapter-date-fns.min.js", "content.js"],
+      "js": [
+        "lib/chart.min.js",
+        "lib/chartjs-adapter-date-fns.min.js",
+        "src/components/chart/parser.js",
+        "src/components/chart/renderer.js",
+        "src/injection/table-replacer.js",
+        "content.js"
+      ],
       "css": ["styles.css"],
       "run_at": "document_idle"
     }
