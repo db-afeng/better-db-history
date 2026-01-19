@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Better Databricks History",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Enhances the Databricks UC table history tab with custom functionality",
   "permissions": [
     "activeTab",
@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["https://*.cloud.databricks.com/explore/data/*"],
-      "js": ["chart.min.js", "content.js"],
+      "js": ["chart.min.js", "chartjs-adapter-date-fns.min.js", "content.js"],
       "css": ["styles.css"],
       "run_at": "document_idle"
     }

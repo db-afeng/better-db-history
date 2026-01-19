@@ -427,18 +427,26 @@ function renderChart(selectedMetric) {
   const canvasEl = document.getElementById('bdbh-metrics-chart');
   if (!canvasEl) return;
   
-  const labels = filteredData.map(row => row.timestampStr);
-  const values = filteredData.map(row => row.metrics[selectedMetric]);
-  const operations = filteredData.map(row => row.operation);
-  const versions = filteredData.map(row => row.version);
+  // Get min/max timestamps from ALL rows (not just filtered) for consistent X-axis
+  const allTimestamps = parsedData.rows.map(row => row.timestamp.getTime());
+  const minTime = Math.min(...allTimestamps);
+  const maxTime = Math.max(...allTimestamps);
+  
+  // Create data points with x (timestamp) and y (value)
+  const dataPoints = filteredData.map(row => ({
+    x: row.timestamp,
+    y: row.metrics[selectedMetric],
+    version: row.version,
+    operation: row.operation,
+    timestampStr: row.timestampStr
+  }));
   
   chartInstance = new Chart(canvasEl, {
     type: 'line',
     data: {
-      labels: labels,
       datasets: [{
         label: formatMetricName(selectedMetric),
-        data: values,
+        data: dataPoints,
         borderColor: '#ff6b35',
         backgroundColor: 'rgba(255, 107, 53, 0.1)',
         borderWidth: 2,
@@ -477,25 +485,36 @@ function renderChart(selectedMetric) {
           displayColors: false,
           callbacks: {
             title: function(context) {
-              const idx = context[0].dataIndex;
-              return `Version ${versions[idx]} - ${operations[idx]}`;
+              const point = context[0].raw;
+              return `Version ${point.version} - ${point.operation}`;
             },
             label: function(context) {
-              return `${formatMetricName(selectedMetric)}: ${formatNumber(context.raw)}`;
+              return `${formatMetricName(selectedMetric)}: ${formatNumber(context.raw.y)}`;
             },
             afterLabel: function(context) {
-              return `Time: ${labels[context.dataIndex]}`;
+              return `Time: ${context.raw.timestampStr}`;
             }
           }
         }
       },
       scales: {
         x: {
+          type: 'time',
+          min: minTime,
+          max: maxTime,
           display: true,
           title: {
             display: true,
             text: 'Timestamp',
             color: '#8b949e'
+          },
+          time: {
+            displayFormats: {
+              hour: 'MMM d, h a',
+              day: 'MMM d',
+              week: 'MMM d',
+              month: 'MMM yyyy'
+            }
           },
           ticks: {
             color: '#8b949e',
