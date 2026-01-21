@@ -66,8 +66,8 @@ async function replaceTableWithChart() {
   
   console.log('[Better DB History] Table data loaded, parsing...');
   
-  // Parse the table data (from parser.js)
-  parsedData = parseTableData();
+  // Parse the table data (from parser.js) - async to allow JSON expansion
+  parsedData = await parseTableData();
   
   const hasRows = parsedData && parsedData.rows && parsedData.rows.length > 0;
   const hasMetrics = parsedData && parsedData.metricKeys && parsedData.metricKeys.length > 0;
