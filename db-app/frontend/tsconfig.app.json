@@ -25,7 +25,7 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["../../shared-ui/*"]
+      "@shared/*": ["../../shared-ui/src/*"]
     }
   },
   "include": ["src"]

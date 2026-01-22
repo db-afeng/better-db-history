@@ -9,7 +9,7 @@ export default defineConfig({
     alias: {
       // 1. Create an alias so you can import clean paths like:
       // import { HistoryTable } from '@shared/components/HistoryTable'
-      '@shared': path.resolve(__dirname, '../../shared-ui'),
+      '@shared': path.resolve(__dirname, '../../shared-ui/src'),
     },
   },
   server: {

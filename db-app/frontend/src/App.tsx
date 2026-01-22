@@ -1,6 +1,8 @@
-import { GREETING } from '@shared/test';
+import { TableHistoryView } from '@shared/index';
 
 function App() {
-  return <h1>{GREETING}</h1>
+  // Replace with your actual table name
+  return <TableHistoryView tableName="zacdav.macq.bronze_trade_ss" />;
 }
-export default App
+
+export default App;
