@@ -1,0 +1,11 @@
+{
+  "name": "better-db-history-extension",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "esbuild src/content.ts --bundle --outfile=dist/content.js --format=iife"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.0"
+  }
+}
