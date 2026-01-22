@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "esbuild src/content.ts --bundle --outfile=dist/content.js --format=iife"
+    "build": "esbuild src/content.ts --bundle --outfile=dist/content.js --format=iife --jsx=automatic"
+  },
+  "dependencies": {
+    "shared-ui": "*",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
     "esbuild": "^0.20.0"
   }
 }

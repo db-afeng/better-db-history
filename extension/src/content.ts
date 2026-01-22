@@ -3,11 +3,26 @@
  * Detects history tab and replaces table with shared-ui component
  */
 
-import { GREETING } from '../../shared-ui/test';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { TableHistoryView } from 'shared-ui';
 
 function isHistoryTab() {
   const url = new URL(window.location.href);
   return url.searchParams.get('activeTab') === 'history';
+}
+
+function getTableNameFromUrl(): string | null {
+  // Extract table name from Databricks URL
+  // Example: /explore/data/catalog/schema/table?activeTab=history
+  const pathMatch = window.location.pathname.match(
+    /\/explore\/data\/([^/]+)\/([^/]+)\/([^/?]+)/
+  );
+  if (pathMatch) {
+    const [, catalog, schema, table] = pathMatch;
+    return `${catalog}.${schema}.${table}`;
+  }
+  return null;
 }
 
 function replaceTable() {
@@ -16,25 +31,38 @@ function replaceTable() {
   const table = document.querySelector('div[role="table"]');
   if (!table || document.getElementById('bdbh-replacement')) return;
 
-  // Hide the table instead of destroying its contents
+  const tableName = getTableNameFromUrl();
+  if (!tableName) {
+    console.warn('[Better DB History] Could not extract table name from URL');
+    return;
+  }
+
+  // Hide the original table
   (table as HTMLElement).style.display = 'none';
 
   // Hide the toolbar/header element
-  const toolbar = document.querySelector('#rc-tabs-0-panel-history > div.databricks-dataexplorer-1lakyo5');
+  const toolbar = document.querySelector(
+    '#rc-tabs-0-panel-history > div.databricks-dataexplorer-1lakyo5'
+  );
   if (toolbar) {
     (toolbar as HTMLElement).style.display = 'none';
   }
 
-  // Insert our content as a sibling
-  const replacement = document.createElement('div');
-  replacement.id = 'bdbh-replacement';
-  replacement.style.padding = '20px';
-  replacement.style.fontSize = '18px';
-  replacement.textContent = GREETING;
+  // Create container for React component
+  const container = document.createElement('div');
+  container.id = 'bdbh-replacement';
+  table.parentNode?.insertBefore(container, table);
 
-  table.parentNode?.insertBefore(replacement, table);
+  // Render React component
+  const root = createRoot(container);
+  root.render(
+    React.createElement(TableHistoryView, {
+      tableName,
+      baseUrl: window.location.origin, // Use current Databricks host
+    })
+  );
 
-  console.log('[Better DB History] Table replaced');
+  console.log('[Better DB History] Table replaced with TableHistoryView');
 }
 
 // Watch for dynamic content
