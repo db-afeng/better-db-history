@@ -1,0 +1,13 @@
+{
+  "name": "better-db-history",
+  "private": true,
+  "workspaces": ["extension", "db-app/frontend", "shared-ui"],
+  "scripts": {
+    "build": "npm run build -w extension && npm run build -w db-app/frontend",
+    "build:ext": "npm run build -w extension",
+    "build:web": "npm run build -w db-app/frontend",
+    "dev": "npm run dev -w db-app/frontend",
+    "deploy": "databricks bundle deploy",
+    "app": "databricks bundle run better-table-app"
+  }
+}

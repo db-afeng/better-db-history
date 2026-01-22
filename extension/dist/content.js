@@ -1,6 +1,6 @@
 (() => {
   // ../shared-ui/test.ts
-  var GREETINGZ = "Hello from Shared UI!";
+  var GREETING = "Hello from Shared UI KEWLIO!";
 
   // src/content.ts
   function isHistoryTab() {
@@ -22,7 +22,7 @@
     replacement.id = "bdbh-replacement";
     replacement.style.padding = "20px";
     replacement.style.fontSize = "18px";
-    replacement.textContent = GREETINGZ;
+    replacement.textContent = GREETING;
     table.parentNode?.insertBefore(replacement, table);
     console.log("[Better DB History] Table replaced");
   }

@@ -3,7 +3,7 @@
  * Detects history tab and replaces table with shared-ui component
  */
 
-import { GREETINGZ } from '../../shared-ui/test';
+import { GREETING } from '../../shared-ui/test';
 
 function isHistoryTab() {
   const url = new URL(window.location.href);
@@ -30,7 +30,7 @@ function replaceTable() {
   replacement.id = 'bdbh-replacement';
   replacement.style.padding = '20px';
   replacement.style.fontSize = '18px';
-  replacement.textContent = GREETINGZ;
+  replacement.textContent = GREETING;
 
   table.parentNode?.insertBefore(replacement, table);
 
