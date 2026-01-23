@@ -4,3 +4,8 @@ resources:
       name: "better-table-${workspace.current_user.domain_friendly_name}"
       source_code_path: "../db-app"
       description: "App to display table history"
+      resources:
+        - name: warehouse_id
+          sql_warehouse:
+            id: ${var.WAREHOUSE_ID}
+            permission: CAN_USE

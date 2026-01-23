@@ -22000,6 +22000,7 @@
   var import_client = __toESM(require_client());
 
   // ../shared-ui/src/api/historyApi.ts
+  var import_meta = {};
   var HistoryApiError = class extends Error {
     constructor(message, status, statusText) {
       super(message);
@@ -22008,7 +22009,7 @@
       this.statusText = statusText;
     }
   };
-  async function fetchTableHistory(tableName, baseUrl = "") {
+  async function fetchTableHistory(tableName, baseUrl = import_meta.env.DATABRICKS_APP_URL ?? "") {
     const url = `${baseUrl}/api/history/${encodeURIComponent(tableName)}`;
     let response;
     try {
@@ -22026,6 +22027,7 @@
       );
     }
     const data = await response.json();
+    console.log(baseUrl);
     return data;
   }
 
@@ -22144,8 +22146,7 @@
     root.render(
       import_react2.default.createElement(TableHistoryView, {
         tableName,
-        baseUrl: window.location.origin
-        // Use current Databricks host
+        baseUrl: "https://better-table-alex-feng-1444828305810485.aws.databricksapps.com"
       })
     );
     console.log("[Better DB History] Table replaced with TableHistoryView");

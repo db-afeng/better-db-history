@@ -1,3 +1,4 @@
-- create the backend app that will get the info
-- create the frontend
+- Flask API to get describe Table History
 - create a way to do dev easier with local hosting of the app
+- create the frontend
+

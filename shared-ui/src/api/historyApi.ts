@@ -33,7 +33,7 @@ export class HistoryApiError extends Error {
  */
 export async function fetchTableHistory(
   tableName: string,
-  baseUrl: string = ''
+  baseUrl: string = import.meta.env.DATABRICKS_APP_URL ?? ''
 ): Promise<TableHistory> {
   const url = `${baseUrl}/api/history/${encodeURIComponent(tableName)}`;
   
@@ -55,5 +55,6 @@ export async function fetchTableHistory(
   }
   
   const data: TableHistory = await response.json();
+  console.log(baseUrl);
   return data;
 }

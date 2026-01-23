@@ -1,0 +1,3 @@
+variables:
+  WAREHOUSE_ID:
+    description: SQL Warehouse to use
