@@ -30,16 +30,27 @@ export class HistoryApiError extends Error {
  * @example
  * // From extension (different origin)
  * const history = await fetchTableHistory('main.default.my_table', 'https://my-app.databricksapps.com');
+ *
+ * @example
+ * // For local dev, set VITE_DATABRICKS_TOKEN in your .env file
+ * // VITE_DATABRICKS_TOKEN=dapi...
  */
 export async function fetchTableHistory(
   tableName: string,
-  baseUrl: string = import.meta.env.DATABRICKS_APP_URL ?? ''
+  baseUrl: string = import.meta.env.DATABRICKS_APP_URL ?? import.meta.env.VITE_DATABRICKS_APP_URL ?? ''
 ): Promise<TableHistory> {
   const url = `${baseUrl}/api/history/${encodeURIComponent(tableName)}`;
 
+  // Support bearer token auth for local development
+  const token = import.meta.env.VITE_DATABRICKS_TOKEN;
+  const headers: HeadersInit = {};
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   let response: Response;
   try {
-    response = await fetch(url);
+    response = await fetch(url, { headers });
   } catch (error) {
     throw new HistoryApiError(
       `Network error while fetching table history: ${error instanceof Error ? error.message : 'Unknown error'}`
@@ -55,6 +66,5 @@ export async function fetchTableHistory(
   }
 
   const data: TableHistory = await response.json();
-  console.log(baseUrl);
   return data;
 }
