@@ -13,18 +13,18 @@ from .databricks_client import get_connection
 def _validate_table_name(table_name: str) -> bool:
     """
     Validate table name to prevent SQL injection.
-    
+
     Accepts formats:
     - table_name
     - schema.table_name
     - catalog.schema.table_name
-    
+
     Each part must be a valid identifier (alphanumeric + underscore, not starting with number).
     Backtick-quoted identifiers are also allowed.
-    
+
     Args:
         table_name: The table name to validate
-        
+
     Returns:
         bool: True if valid, False otherwise
     """
@@ -36,17 +36,17 @@ def _validate_table_name(table_name: str) -> bool:
     identifier_pattern = f'(?:{unquoted_pattern}|{quoted_pattern})'
     # Full pattern: 1-3 parts separated by dots
     full_pattern = f'^{identifier_pattern}(?:\\.{identifier_pattern}){{0,2}}$'
-    
+
     return bool(re.match(full_pattern, table_name))
 
 
 def _parse_json_field(value: Any) -> Any:
     """
     Parse a JSON string field, returning None if empty or invalid.
-    
+
     Args:
         value: The value to parse (may be string, dict, or None)
-        
+
     Returns:
         Parsed JSON object or None
     """
@@ -67,10 +67,10 @@ def _parse_json_field(value: Any) -> Any:
 def _format_timestamp(value: Any) -> str | None:
     """
     Format a timestamp value to ISO 8601 string.
-    
+
     Args:
         value: Timestamp value (datetime or string)
-        
+
     Returns:
         ISO 8601 formatted string or None
     """
@@ -86,16 +86,16 @@ def _format_timestamp(value: Any) -> str | None:
 def _transform_job_info(job_data: dict | None) -> dict | None:
     """
     Transform job info to match TypeScript JobInfo interface.
-    
+
     Args:
         job_data: Raw job data from Databricks
-        
+
     Returns:
         Transformed job info or None
     """
     if not job_data:
         return None
-    
+
     return {
         "jobId": str(job_data.get("jobId", "")),
         "jobName": job_data.get("jobName"),
@@ -108,16 +108,16 @@ def _transform_job_info(job_data: dict | None) -> dict | None:
 def _transform_notebook_info(notebook_data: dict | None) -> dict | None:
     """
     Transform notebook info to match TypeScript NotebookInfo interface.
-    
+
     Args:
         notebook_data: Raw notebook data from Databricks
-        
+
     Returns:
         Transformed notebook info or None
     """
     if not notebook_data:
         return None
-    
+
     return {
         "notebookId": str(notebook_data.get("notebookId", "")),
         "notebookPath": notebook_data.get("notebookPath"),
@@ -127,17 +127,17 @@ def _transform_notebook_info(notebook_data: dict | None) -> dict | None:
 def _transform_row(row: tuple, columns: list[str]) -> dict:
     """
     Transform a single history row to match TypeScript TableHistoryRecord interface.
-    
+
     Args:
         row: Tuple of values from the database
         columns: List of column names
-        
+
     Returns:
         Dictionary matching TableHistoryRecord interface
     """
     # Create a dict from columns and row values
     raw = dict(zip(columns, row))
-    
+
     return {
         "version": raw.get("version"),
         "timestamp": _format_timestamp(raw.get("timestamp")),
@@ -159,28 +159,28 @@ def _transform_row(row: tuple, columns: list[str]) -> dict:
 def get_table_history(table_name: str) -> list[dict]:
     """
     Fetch table history from Databricks using DESCRIBE HISTORY.
-    
+
     Args:
         table_name: Full table name (e.g., "catalog.schema.table")
-        
+
     Returns:
         List of history records matching TableHistoryRecord interface
-        
+
     Raises:
         ValueError: If table name is invalid
         Exception: If database query fails
     """
     if not _validate_table_name(table_name):
         raise ValueError(f"Invalid table name: {table_name}")
-    
+
     with get_connection() as conn:
         with conn.cursor() as cursor:
             # Execute DESCRIBE HISTORY command
             cursor.execute(f"DESCRIBE HISTORY {table_name}")
-            
+
             # Get column names from cursor description
             columns = [desc[0] for desc in cursor.description]
-            
+
             # Fetch all rows and transform them
             rows = cursor.fetchall()
             return [_transform_row(row, columns) for row in rows]

@@ -18,10 +18,10 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 def get_history(table_name):
     """
     Fetch table history from Databricks.
-    
+
     Args:
         table_name: Full table name (e.g., "catalog.schema.table")
-        
+
     Returns:
         JSON array of TableHistoryRecord objects
     """
