@@ -22081,28 +22081,7 @@
         tableName
       ] });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "table-history-view", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", { children: [
-        "History for ",
-        tableName
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", { className: "table-history-table", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "Version" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "Timestamp" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "Operation" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "User" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "Rows Affected" })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: history.map((record) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: record.version }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: new Date(record.timestamp).toLocaleString() }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: record.operation }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: record.userName ?? record.userId ?? "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: record.operationMetrics?.numOutputRows ?? record.operationMetrics?.numTargetRowsInserted ?? record.operationMetrics?.numUpdatedRows ?? record.operationMetrics?.numDeletedRows ?? "\u2014" })
-        ] }, record.version)) })
-      ] })
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "table-history-view", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", { children: JSON.stringify(history, null, 2) }) });
   }
 
   // src/content.ts

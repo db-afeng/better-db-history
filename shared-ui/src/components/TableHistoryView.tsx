@@ -76,35 +76,7 @@ export function TableHistoryView({ tableName, baseUrl }: TableHistoryViewProps) 
 
   return (
     <div className="table-history-view">
-      <h2>History for {tableName}</h2>
-      <table className="table-history-table">
-        <thead>
-          <tr>
-            <th>Version</th>
-            <th>Timestamp</th>
-            <th>Operation</th>
-            <th>User</th>
-            <th>Rows Affected</th>
-          </tr>
-        </thead>
-        <tbody>
-          {history.map((record) => (
-            <tr key={record.version}>
-              <td>{record.version}</td>
-              <td>{new Date(record.timestamp).toLocaleString()}</td>
-              <td>{record.operation}</td>
-              <td>{record.userName ?? record.userId ?? '—'}</td>
-              <td>
-                {record.operationMetrics?.numOutputRows ??
-                  record.operationMetrics?.numTargetRowsInserted ??
-                  record.operationMetrics?.numUpdatedRows ??
-                  record.operationMetrics?.numDeletedRows ??
-                  '—'}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <pre>{JSON.stringify(history, null, 2)}</pre>
     </div>
   );
 }

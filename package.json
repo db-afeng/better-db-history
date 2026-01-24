@@ -7,7 +7,6 @@
     "build:ext": "npm run build -w extension",
     "build:web": "npm run build -w db-app/frontend",
     "dev": "npm run dev -w db-app/frontend",
-    "deploy": "databricks bundle deploy",
-    "app": "databricks bundle run better-table-app"
+    "deploy": "databricks bundle deploy && databricks bundle run better-table-app"
   }
 }
