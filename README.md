@@ -84,11 +84,28 @@ npm run app
 
 ### Local Development
 
-```bash
-npm run dev
-```
+1. **Get an OAuth token** using the Databricks CLI:
+   ```bash
+   # Login first (one-time setup)
+   databricks auth login --host https://your-workspace.cloud.databricks.com --profile my-local-dev
 
-Starts the frontend dev server at `http://localhost:5173`.
+   # Get the token
+   databricks auth token --profile my-local-dev
+   ```
+
+2. **Create a `.env` file** in the project root with your token:
+   ```env
+   DATABRICKS_TOKEN=<paste-token-here>
+   ```
+
+3. **Start the dev server**:
+   ```bash
+   npm run dev
+   ```
+
+   The frontend runs at `http://localhost:5173` and proxies API requests to the deployed Databricks App.
+
+> **Note:** OAuth tokens expire. If you get 401 errors, refresh your token by running `databricks auth token --profile my-local-dev` again.
 
 ## Scripts Reference
 
