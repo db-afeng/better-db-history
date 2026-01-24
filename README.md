@@ -107,6 +107,25 @@ npm run app
 
 > **Note:** OAuth tokens expire. If you get 401 errors, refresh your token by running `databricks auth token --profile my-local-dev` again.
 
+## .env File
+
+Create a `.env` file in the project root with the following variables:
+
+```env
+# Required for app deployment
+BUNDLE_VAR_WAREHOUSE_ID=<your-sql-warehouse-id>
+
+# Required for local development
+DATABRICKS_APP_URL=<your-deployed-app-url>  # Get this after deploying your app
+DATABRICKS_TOKEN=<your-oauth-token>          # See "Local Development" section above
+```
+
+| Variable | Purpose |
+|----------|---------|
+| `BUNDLE_VAR_WAREHOUSE_ID` | SQL warehouse ID used when deploying the app |
+| `DATABRICKS_APP_URL` | URL of your deployed Databricks App (e.g., `https://my-app.databricksapps.com`) |
+| `DATABRICKS_TOKEN` | OAuth token for local API calls (see token instructions above) |
+
 ## Scripts Reference
 
 | Command | Description |
