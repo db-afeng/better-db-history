@@ -10,8 +10,17 @@ export type {
   IsolationLevel,
 } from './types/TableHistory';
 
+export type {
+  NotebookLineageEvent,
+  NotebookLineageEvents,
+} from './types/NotebookLineageEvent';
+
 // API
-export { fetchTableHistory, HistoryApiError } from './api/historyApi';
+export {
+  fetchTableHistory,
+  fetchNotebookLineageEvents,
+  HistoryApiError,
+} from './api/historyApi';
 
 // Components
 export { TableHistoryView } from './components/TableHistoryView';

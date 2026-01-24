@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchTableHistory } from '@shared/api/historyApi';
+import { fetchTableHistory, fetchNotebookLineageEvents } from '@shared/api/historyApi';
 
 const DEFAULT_TABLE = 'zacdav.macq.bronze_trade_ss';
 
@@ -14,6 +14,11 @@ const API_OPTIONS: ApiOption[] = [
     name: 'fetchTableHistory',
     description: 'Fetch Delta table history',
     fetchFn: (tableName) => fetchTableHistory(tableName),
+  },
+  {
+    name: 'fetchNotebookLineageEvents',
+    description: 'Fetch notebook lineage events',
+    fetchFn: (tableName) => fetchNotebookLineageEvents(tableName),
   },
 ];
 

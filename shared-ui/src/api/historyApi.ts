@@ -1,4 +1,5 @@
 import type { TableHistory } from '../types/TableHistory';
+import type { NotebookLineageEvents } from '../types/NotebookLineageEvent';
 
 /**
  * Error thrown when the API request fails
@@ -59,5 +60,48 @@ export async function fetchTableHistory(
   }
 
   const data: TableHistory = await response.json();
+  return data;
+}
+
+/**
+ * Fetches notebook lineage events for a table from the Flask backend
+ *
+ * @param tableName - Full table name (e.g., "catalog.schema.table")
+ * @param baseUrl - Optional base URL for the API (defaults to relative path for same-origin requests)
+ * @returns Promise resolving to array of NotebookLineageEvent
+ * @throws HistoryApiError if the request fails
+ *
+ * @example
+ * // From db-app frontend (same origin)
+ * const events = await fetchNotebookLineageEvents('main.default.my_table');
+ *
+ * @example
+ * // From extension (different origin)
+ * const events = await fetchNotebookLineageEvents('main.default.my_table', 'https://my-app.databricksapps.com');
+ */
+export async function fetchNotebookLineageEvents(
+  tableName: string,
+  baseUrl: string = import.meta.env.DATABRICKS_APP_URL ?? ''
+): Promise<NotebookLineageEvents> {
+  const url = `${baseUrl}/api/events/notebook/${encodeURIComponent(tableName)}`;
+
+  let response: Response;
+  try {
+    response = await fetch(url);
+  } catch (error) {
+    throw new HistoryApiError(
+      `Network error while fetching notebook lineage events: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
+  }
+
+  if (!response.ok) {
+    throw new HistoryApiError(
+      `Failed to fetch notebook lineage events: ${response.status} ${response.statusText}`,
+      response.status,
+      response.statusText
+    );
+  }
+
+  const data: NotebookLineageEvents = await response.json();
   return data;
 }

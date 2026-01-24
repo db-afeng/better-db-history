@@ -6,10 +6,10 @@ import re
 from datetime import datetime
 from typing import Any
 
-from .databricks_client import get_connection
+from ..db import get_connection
 
 
-def _validate_table_name(table_name: str) -> bool:
+def validate_table_name(table_name: str) -> bool:
     """
     Validate table name to prevent SQL injection.
 
@@ -88,7 +88,7 @@ def get_table_history(table_name: str) -> list[dict]:
         ValueError: If table name is invalid
         Exception: If database query fails
     """
-    if not _validate_table_name(table_name):
+    if not validate_table_name(table_name):
         raise ValueError(f"Invalid table name: {table_name}")
 
     with get_connection() as conn:

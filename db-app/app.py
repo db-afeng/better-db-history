@@ -3,7 +3,7 @@ import os
 from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
 
-from backend.history import get_table_history
+from backend import get_table_history, get_notebook_lineage_events
 
 app = Flask(__name__, static_folder="frontend/dist")
 CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -19,6 +19,18 @@ def get_history(table_name):
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": f"Failed to fetch table history: {str(e)}"}), 500
+
+
+@app.route("/api/events/notebook/<path:table_name>")
+def get_notebook_events(table_name):
+    """Fetch notebook lineage events for a table from Databricks."""
+    try:
+        events = get_notebook_lineage_events(table_name)
+        return jsonify(events)
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": f"Failed to fetch notebook events: {str(e)}"}), 500
 
 
 @app.route("/", defaults={"path": ""})
