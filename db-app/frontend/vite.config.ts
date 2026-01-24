@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
       },
       proxy: {
         '/api': {
-          target: 'https://better-table-alex-feng-1444828305810485.aws.databricksapps.com',
+          target: `${env.DATABRICKS_APP_HOST}`,
           changeOrigin: true,
           secure: true,
           headers: {

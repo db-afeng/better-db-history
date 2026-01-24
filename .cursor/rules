@@ -11,8 +11,37 @@
 - `shared-ui/` - Shared React components and TypeScript types
 - `extension/` - Browser extension
 
+## Backend Structure
+
+- `db-app/backend/db/` - Databricks SQL connection management
+- `db-app/backend/services/` - Business logic for API endpoints
+
 ## Key Files
 
-- `db-app/backend/history.py` - Fetches table history from Databricks via DESCRIBE HISTORY
-- `shared-ui/src/types/TableHistory.ts` - TypeScript interfaces matching the backend response
+### Backend
+- `db-app/backend/db/client.py` - Databricks SQL connection context manager
+- `db-app/backend/services/history.py` - Fetches table history via DESCRIBE HISTORY
+- `db-app/backend/services/lineage.py` - Fetches notebook lineage events from system.access.table_lineage
+- `db-app/app.py` - Flask routes
+
+### Frontend / Shared
+- `shared-ui/src/types/TableHistory.ts` - TypeScript interfaces for table history
+- `shared-ui/src/types/NotebookLineageEvent.ts` - TypeScript interfaces for lineage events
+- `shared-ui/src/api/historyApi.ts` - API client functions
 - `shared-ui/src/components/TableHistoryView.tsx` - React component to display table history
+
+## API Endpoints
+
+| Route | Function | Description |
+|-------|----------|-------------|
+| `/api/history/<table_name>` | `get_table_history()` | Delta table history |
+| `/api/events/notebook/<table_name>` | `get_notebook_lineage_events()` | Notebook lineage events |
+
+## Adding New Endpoints
+
+1. Create a service function in `db-app/backend/services/`
+2. Export it from `db-app/backend/services/__init__.py` and `db-app/backend/__init__.py`
+3. Add the Flask route in `db-app/app.py`
+4. Create TypeScript types in `shared-ui/src/types/`
+5. Add API client function in `shared-ui/src/api/historyApi.ts`
+6. Export from `shared-ui/src/index.ts`

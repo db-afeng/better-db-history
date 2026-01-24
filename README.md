@@ -13,11 +13,21 @@ better-db-history/
 │   └── manifest.json
 ├── db-app/              # Databricks App
 │   ├── frontend/        # React + Vite frontend
-│   └── app.py           # Python backend
+│   ├── backend/         # Python backend modules
+│   │   ├── db/          # Database connection management
+│   │   └── services/    # Business logic (history, lineage)
+│   └── app.py           # Flask application
 ├── shared-ui/           # Shared components (used by both)
 ├── databricks.yml       # Bundle configuration
 └── package.json         # Workspace scripts
 ```
+
+## API Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/history/<table_name>` | Fetch Delta table history (DESCRIBE HISTORY) |
+| `GET /api/events/notebook/<table_name>` | Fetch notebook lineage events from `system.access.table_lineage` |
 
 ## Quick Start
 
@@ -106,6 +116,25 @@ npm run app
    The frontend runs at `http://localhost:5173` and proxies API requests to the deployed Databricks App.
 
 > **Note:** OAuth tokens expire. If you get 401 errors, refresh your token by running `databricks auth token --profile my-local-dev` again.
+
+## .env File
+
+Create a `.env` file in the project root with the following variables:
+
+```env
+# Required for app deployment
+BUNDLE_VAR_WAREHOUSE_ID=<your-sql-warehouse-id>
+
+# Required for local development
+DATABRICKS_APP_URL=<your-deployed-app-url>  # Get this after deploying your app
+DATABRICKS_TOKEN=<your-oauth-token>          # See "Local Development" section above
+```
+
+| Variable | Purpose |
+|----------|---------|
+| `BUNDLE_VAR_WAREHOUSE_ID` | SQL warehouse ID used when deploying the app |
+| `DATABRICKS_APP_URL` | URL of your deployed Databricks App (e.g., `https://my-app.databricksapps.com`) |
+| `DATABRICKS_TOKEN` | OAuth token for local API calls (see token instructions above) |
 
 ## Scripts Reference
 
