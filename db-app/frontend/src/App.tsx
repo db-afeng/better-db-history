@@ -1,8 +1,19 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { TableHistoryView } from '@shared/index';
+import { DataPage } from './pages/DataPage';
 
 function App() {
-  // Replace with your actual table name
-  return <TableHistoryView tableName="zacdav.macq.bronze_trade_ss" />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<TableHistoryView tableName="zacdav.macq.bronze_trade_ss" />}
+        />
+        <Route path="/data" element={<DataPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

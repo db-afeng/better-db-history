@@ -66,3 +66,64 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Data Page */
+.data-page {
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.data-page h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.data-page .controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.data-page input[type="text"],
+.data-page select {
+  flex: 1;
+  padding: 0.6em 1em;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+@media (prefers-color-scheme: light) {
+  .data-page input[type="text"],
+  .data-page select {
+    background: #f9f9f9;
+    border-color: #ccc;
+  }
+}
+
+.data-page .error {
+  color: #ff6b6b;
+  padding: 1rem;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.data-page .json-output {
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow: auto;
+  max-height: 70vh;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: light) {
+  .data-page .json-output {
+    background: #f5f5f5;
+  }
+}

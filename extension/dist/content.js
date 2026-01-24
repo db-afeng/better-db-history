@@ -22000,6 +22000,7 @@
   var import_client = __toESM(require_client());
 
   // ../shared-ui/src/api/historyApi.ts
+  var import_meta = {};
   var HistoryApiError = class extends Error {
     constructor(message, status, statusText) {
       super(message);
@@ -22008,7 +22009,7 @@
       this.statusText = statusText;
     }
   };
-  async function fetchTableHistory(tableName, baseUrl = "") {
+  async function fetchTableHistory(tableName, baseUrl = import_meta.env.DATABRICKS_APP_URL ?? "") {
     const url = `${baseUrl}/api/history/${encodeURIComponent(tableName)}`;
     let response;
     try {
@@ -22080,28 +22081,7 @@
         tableName
       ] });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "table-history-view", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", { children: [
-        "History for ",
-        tableName
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", { className: "table-history-table", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "Version" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "Timestamp" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "Operation" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "User" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { children: "Rows Affected" })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: history.map((record) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: record.version }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: new Date(record.timestamp).toLocaleString() }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: record.operation }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: record.userName ?? record.userId ?? "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { children: record.operationMetrics?.numOutputRows ?? record.operationMetrics?.numTargetRowsInserted ?? record.operationMetrics?.numUpdatedRows ?? record.operationMetrics?.numDeletedRows ?? "\u2014" })
-        ] }, record.version)) })
-      ] })
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "table-history-view", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pre", { children: JSON.stringify(history, null, 2) }) });
   }
 
   // src/content.ts
@@ -22144,8 +22124,7 @@
     root.render(
       import_react2.default.createElement(TableHistoryView, {
         tableName,
-        baseUrl: window.location.origin
-        // Use current Databricks host
+        baseUrl: "https://better-table-alex-feng-1444828305810485.aws.databricksapps.com"
       })
     );
     console.log("[Better DB History] Table replaced with TableHistoryView");

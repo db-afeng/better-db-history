@@ -58,7 +58,7 @@ function replaceTable() {
   root.render(
     React.createElement(TableHistoryView, {
       tableName,
-      baseUrl: window.location.origin, // Use current Databricks host
+      baseUrl: 'https://better-table-alex-feng-1444828305810485.aws.databricksapps.com'
     })
   );
 
