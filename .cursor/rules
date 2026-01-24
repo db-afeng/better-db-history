@@ -1,0 +1,18 @@
+# Development Instructions
+
+## Testing Changes
+
+- **Deploy backend**: Run `npm run deploy` in the root directory to set up the backend
+- **Start frontend dev server**: Run `npm run dev` to see the frontend
+
+## Project Structure
+
+- `db-app/` - Flask backend + React frontend for the Databricks app
+- `shared-ui/` - Shared React components and TypeScript types
+- `extension/` - Browser extension
+
+## Key Files
+
+- `db-app/backend/history.py` - Fetches table history from Databricks via DESCRIBE HISTORY
+- `shared-ui/src/types/TableHistory.ts` - TypeScript interfaces matching the backend response
+- `shared-ui/src/components/TableHistoryView.tsx` - React component to display table history
