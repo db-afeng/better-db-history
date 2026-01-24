@@ -13,11 +13,21 @@ better-db-history/
 │   └── manifest.json
 ├── db-app/              # Databricks App
 │   ├── frontend/        # React + Vite frontend
-│   └── app.py           # Python backend
+│   ├── backend/         # Python backend modules
+│   │   ├── db/          # Database connection management
+│   │   └── services/    # Business logic (history, lineage)
+│   └── app.py           # Flask application
 ├── shared-ui/           # Shared components (used by both)
 ├── databricks.yml       # Bundle configuration
 └── package.json         # Workspace scripts
 ```
+
+## API Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/history/<table_name>` | Fetch Delta table history (DESCRIBE HISTORY) |
+| `GET /api/events/notebook/<table_name>` | Fetch notebook lineage events from `system.access.table_lineage` |
 
 ## Quick Start
 
