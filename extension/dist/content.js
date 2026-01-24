@@ -22009,16 +22009,11 @@
       this.statusText = statusText;
     }
   };
-  async function fetchTableHistory(tableName, baseUrl = import_meta.env.DATABRICKS_APP_URL ?? import_meta.env.VITE_DATABRICKS_APP_URL ?? "") {
+  async function fetchTableHistory(tableName, baseUrl = import_meta.env.DATABRICKS_APP_URL ?? "") {
     const url = `${baseUrl}/api/history/${encodeURIComponent(tableName)}`;
-    const token = import_meta.env.VITE_DATABRICKS_TOKEN;
-    const headers = {};
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
-    }
     let response;
     try {
-      response = await fetch(url, { headers });
+      response = await fetch(url);
     } catch (error) {
       throw new HistoryApiError(
         `Network error while fetching table history: ${error instanceof Error ? error.message : "Unknown error"}`

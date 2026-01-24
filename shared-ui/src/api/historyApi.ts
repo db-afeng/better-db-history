@@ -37,20 +37,13 @@ export class HistoryApiError extends Error {
  */
 export async function fetchTableHistory(
   tableName: string,
-  baseUrl: string = import.meta.env.DATABRICKS_APP_URL ?? import.meta.env.VITE_DATABRICKS_APP_URL ?? ''
+  baseUrl: string = import.meta.env.DATABRICKS_APP_URL ?? ''
 ): Promise<TableHistory> {
   const url = `${baseUrl}/api/history/${encodeURIComponent(tableName)}`;
 
-  // Support bearer token auth for local development
-  const token = import.meta.env.VITE_DATABRICKS_TOKEN;
-  const headers: HeadersInit = {};
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
   let response: Response;
   try {
-    response = await fetch(url, { headers });
+    response = await fetch(url);
   } catch (error) {
     throw new HistoryApiError(
       `Network error while fetching table history: ${error instanceof Error ? error.message : 'Unknown error'}`
